@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { CartContext } from '../../providers/CartContext';
 
 const CartModal = () => {
-  const { editModal, seteditModal } = useContext(CartContext)
+  const { editModal, seteditModal, currentSale } = useContext(CartContext)
 
   return (
     <>
@@ -26,14 +26,15 @@ const CartModal = () => {
               </button>
             </header>
             <div className='cartBox'>
-              <CartProductList />
-
-              <div className='emptyBox'>
-                <StyledTitle tag='h3' $fontSize='three' textAlign='center'>
-                  Sua sacola está vazia
-                </StyledTitle>
-                <StyledParagraph textAlign='center'>Adicione itens</StyledParagraph>
-              </div>
+              {currentSale.length > 0 ? <CartProductList />
+                :
+                <div className='emptyBox'>
+                  <StyledTitle tag='h3' $fontSize='three' textAlign='center'>
+                    Sua sacola está vazia
+                  </StyledTitle>
+                  <StyledParagraph textAlign='center'>Adicione itens</StyledParagraph>
+                </div>
+              }
             </div>
           </dialog>
         </StyledCartModalBox>
@@ -46,6 +47,7 @@ const CartModal = () => {
 };
 
 export default CartModal;
+
 
 
 

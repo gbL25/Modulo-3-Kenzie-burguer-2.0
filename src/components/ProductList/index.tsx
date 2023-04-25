@@ -10,7 +10,7 @@ const ProductList = () => {
   return (
     <StyledProductList>
       {listProducts.map((element) =>
-        <ProductCard key={element.id} id={element.id} name={element.name} category={element.category} price={element.price} img={element.img} />
+        <ProductCard key={element.id} element={element} />
       )}
     </StyledProductList>
   )

@@ -3,6 +3,7 @@ import { api } from "../services/Api";
 import { IRegisterFormData } from "../components/Form/RegisterForm";
 import { ILoginFormData } from "../components/Form/LoginForm";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface IUserProviderProps {
     children: React.ReactNode;
@@ -47,9 +48,9 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
                     }
                 })
                 setUser(data)
-                navigate('/')
-            } catch (error) {
-                console.log(error)
+                navigate('/shop')
+            } catch (error: any) {
+                toast.error(error.message)
                 localStorage.removeItem("@TOKEN");
                 localStorage.removeItem("@USERID");
             }
@@ -66,9 +67,10 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     const userRegister = async (formData: IRegisterFormData) => {
         try {
             const response = await api.post<IUserRegisterResponse>('/users', formData)
+            toast.success('Cadastro feito com sucesso!')
             navigate('/')
         } catch (error) {
-            console.log(error)
+            toast.error('Ops! Algo deu errado')
         }
     }
 
@@ -78,9 +80,10 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
             localStorage.setItem("@TOKEN", data.accessToken)
             localStorage.setItem("@USERID", data.user.id)
             setUser(data.user)
+            toast.success('Logado com sucesso!')
             navigate('/shop')
         } catch (error) {
-            console.log(error)
+            toast.error('Ops! Algo deu errado')
         }
     }
 
